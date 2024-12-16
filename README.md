@@ -4,9 +4,18 @@
 1. [Introducción](#introducción)
 2. [Docker Compose](#docker-compose)
 3. [Contenedor Balanceador](#contenedor-balanceador)
+   1. [Dockerfile del Balanceador](#dockerfile-del-balanceador)
+   2. [Fichero de Configuración del Balanceador](#fichero-de-configuración-del-balanceador)
 4. [Contenedor PHP](#contenedor-php)
+   1. [Dockerfile del Contenedor PHP](#dockerfile-del-contenedor-php)
+   2. [Fichero de Configuración del PHP-FPM](#fichero-de-configuración-del-php-fpm)
 5. [Contenedor Web](#contenedor-web)
+   1. [Dockerfile del Contenedor Web](#dockerfile-del-contenedor-web)
+   2. [Fichero de Configuración del Contenedor Web](#fichero-de-configuración-del-contenedor-web)
 6. [Contenedor MariaDB](#contenedor-mariadb)
+   1. [Dockerfile del Contenedor MariaDB](#dockerfile-del-contenedor-mariadb)
+   2. [Fichero de Configuración de MariaDB](#fichero-de-configuración-de-mariadb)
+   3. [Script](#script)
 
 ## Introducción
 En esta práctica vamos a desplegar Owncloud en una infraestructura en alta disponibilidad de 3 capas basada en una pila LEMP en docker.
@@ -118,7 +127,7 @@ volumes:
 ````
 ## Contenedor Balanceador
 Para el balanceador he utilizado el siguiente dockerfile y el fichero de configuración para que nginx pueda balancear a los 2 servidores web.
-### DockerFile
+### Dockerfile del Balanceador
 ````
 FROM nginx:latest
 # Copiar el archivo de configuración de Nginx 
@@ -126,7 +135,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 ````
-### Fichero de configuración
+### Fichero de Configuración del Balanceador
 ````
 worker_processes auto;
 
@@ -156,7 +165,7 @@ http {
 
 ## Contenedor PHP
 En este contenedor tenemos que instalar php7.4 , que es compatible con Owncloud. Añadir el fichero de configuración para que se puedan conectar los servidores web.
-### Dockerfile
+### Dockerfile del Contenedor PHP
 ````
 FROM debian:latest
 
@@ -194,7 +203,7 @@ RUN chown -R www-data:www-data /var/www/html/
 
 RUN chmod -R 770 /var/www/html/
 ````
-### Fichero de configuración
+### Fichero de Configuración del PHP-FPM
 Editamos el listen para que los servidores se puedan conectar mediante el puerto 9000.
 ````
 [www]
@@ -213,7 +222,7 @@ pm.max_spare_servers = 3
 ## Contenedor Web
 Es parecido al del balanceador solo que en este el fichero de configuración es otra. Además dar permisos a la carpeta del owncloud.
 
-### Docker File
+### Dockerfile del Contenedor Web
 ````
 FROM nginx:latest
 
@@ -232,7 +241,7 @@ WORKDIR /var/www/html
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 ````
-### Fichero de configuración
+### Fichero de Configuración del Contenedor Web
 ````
 server {
     listen 80;
@@ -262,7 +271,7 @@ server {
 ## Contenedor MariaDB
 En este contenedor irá la base de datos del owncloud,este tendrá 2 archivos más para la configuración, el primero es el fichero de configuración . En donde cambiaremos el bind-address y el segundo es el script para crear los usuarios para que puedan accederse los contendores de la capa 2.
 
-### Docker File
+### Dockerfile del Contenedor MariaDB
 ````
 FROM mariadb
 # Configuración inicial
@@ -279,7 +288,7 @@ COPY script.sql /docker-entrypoint-initdb.d/
 EXPOSE 3306
 ````
 
-### Fichero de configuración
+### Fichero de Configuración de MariaDB
 ````
 [mysqld]
 user = mysql

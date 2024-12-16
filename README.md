@@ -51,6 +51,7 @@ services:
     hostname: servidor_web1
     depends_on: 
       - basededatos
+      - nfsphp
     volumes:
       - web_data:/var/www/html  
 
@@ -68,6 +69,7 @@ services:
     hostname: servidor_web2
     depends_on: 
       - basededatos
+      - nfsphp
     volumes:
       - web_data:/var/www/html   
 
@@ -112,6 +114,7 @@ volumes:
   web_data:  
   db_data:
 
+
 ````
 ## Contenedor Balanceador
 Para el balanceador he utilizado el siguiente dockerfile y el fichero de configuración para que nginx pueda balancear a los 2 servidores web.
@@ -152,4 +155,58 @@ http {
 ````
 
 ## Contenedor PHP
-En este contenedor 
+En este contenedor tenemos que instalar php7.4 , que es compatible con Owncloud. Añadir el fichero de configuración para que se puedan conectar los servidores web.
+- Dockerfile
+````
+FROM debian:latest
+
+RUN apt-get update && apt-get install -y \
+    lsb-release \
+    apt-transport-https \
+    ca-certificates \
+    wget && \
+    wget -O /etc/apt/trusted.gpg.d/sury-keyring.gpg https://packages.sury.org/php/apt.gpg && \
+    echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/sury.list && \
+    apt-get update
+
+RUN apt-get install -y \
+    php7.4-fpm \
+    php7.4-mysql \
+    php7.4-xml \
+    php7.4-mbstring \
+    php7.4-gd \
+    php7.4-curl \
+    php7.4-zip \
+    php7.4-bz2 \
+    php7.4-intl \
+    nginx \
+    && rm -rf /var/lib/apt/lists/*
+
+# Configuración de PHP-FPM
+COPY ./www.conf /etc/php/7.4/fpm/pool.d/www.conf
+
+# Exponer el puerto usado por PHP-FPM
+EXPOSE 9000
+
+CMD php-fpm7.4 -D && nginx -g "daemon off;"
+
+RUN chown -R www-data:www-data /var/www/html/
+
+RUN chmod -R 770 /var/www/html/
+````
+- Fichero de configuración
+Editamos el listen para que los servidores se puedan conectar mediante el puerto 9000.
+````
+[www]
+listen = 192.168.20.13:9000
+listen.owner = www-data
+listen.group = www-data
+listen.mode = 0660
+user = www-data
+group = www-data
+pm = dynamic
+pm.max_children = 5
+pm.start_servers = 2
+pm.min_spare_servers = 1
+pm.max_spare_servers = 3
+````

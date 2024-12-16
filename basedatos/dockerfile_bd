@@ -7,7 +7,7 @@ ENV MYSQL_PASSWORD=owncloud_password
 
 COPY ./mysqld.cnf /etc/mysql/conf.d/
 
-# Copiar script SQL para configuración adicional
+# Script con la creacion de usuarios.
 COPY script.sql /docker-entrypoint-initdb.d/
 
 EXPOSE 3306

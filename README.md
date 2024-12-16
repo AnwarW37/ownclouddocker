@@ -17,7 +17,7 @@ En esta práctica vamos a desplegar Owncloud en una infraestructura en alta disp
 
 ## Docker Compose
 Para ejecutar varios contenedores en un fichero, he utilizado el docker-compose.
-El fichero docker-compse.yml es el siguiente:
+El fichero docker-compse.yml tiene una configuración básica , en la que le indicamos el nombre de contenedor, dockerfile que van a utilizar para crear la imagen, los puertos, la red y la ip que le queremos asignar . Además , le podemos asignar la opción de que dependa de otro contenedor, como en este caso hay algunos que dependen de otros para que funcionen correctamente.
 ````
 version: '3.1'
 services:
@@ -113,3 +113,43 @@ volumes:
   db_data:
 
 ````
+## Contenedor Balanceador
+Para el balanceador he utilizado el siguiente dockerfile y el fichero de configuración para que nginx pueda balancear a los 2 servidores web.
+- DockerFile
+````
+FROM nginx:latest
+# Copiar el archivo de configuración de Nginx 
+COPY nginx.conf /etc/nginx/nginx.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+````
+- Fichero de configuración
+````
+worker_processes auto;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    upstream backend {
+        server 192.168.10.11:80;
+        server 192.168.10.12:80;
+    }
+
+    server {
+        listen 80;
+
+        location / {
+            proxy_pass http://backend;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+    }
+}
+````
+
+## Contenedor PHP
+En este contenedor 

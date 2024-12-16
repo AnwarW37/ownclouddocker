@@ -1,0 +1,12 @@
+# Usar la imagen base de Nginx
+FROM nginx:latest
+
+# Copiar el archivo de configuración de Nginx personalizado
+COPY nginx.conf /etc/nginx/nginx.conf
+
+#Carpeta donde esta /usr/share/nginx/html
+# Exponer el puerto 80 para Nginx
+EXPOSE 80
+
+# Iniciar Nginx y PHP-FPM
+CMD ["nginx", "-g", "daemon off;"]

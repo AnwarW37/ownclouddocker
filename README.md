@@ -262,3 +262,47 @@ server {
 ## Contenedor MariaDB
 En este contenedor irá la base de datos del owncloud,este tendrá 2 archivos más para la configuración, el primero es el fichero de configuración . En donde cambiaremos el bind-address y el segundo es el script para crear los usuarios para que puedan accederse los contendores de la capa 2.
 
+### Docker File
+````
+FROM mariadb
+# Configuración inicial
+ENV MYSQL_ROOT_PASSWORD=root_password
+ENV MYSQL_DATABASE=owncloud
+ENV MYSQL_USER=owncloud_user
+ENV MYSQL_PASSWORD=owncloud_password
+
+COPY ./mysqld.cnf /etc/mysql/conf.d/
+
+# Script con la creacion de usuarios.
+COPY script.sql /docker-entrypoint-initdb.d/
+
+EXPOSE 3306
+````
+
+### Fichero de configuración
+````
+[mysqld]
+user = mysql
+pid-file = /var/run/mysqld/mysqld.pid
+socket = /var/run/mysqld/mysqld.sock
+port = 3306
+datadir = /var/lib/mysql
+
+# Permitir conexiones desde otros contenedores.
+bind-address = 192.168.20.14
+
+skip-networking = 0
+max_connections = 100
+connect_timeout = 10
+wait_timeout = 600
+max_allowed_packet = 16M
+log_error = /var/log/mysql/error.log
+general_log = 1
+general_log_file = /var/log/mysql/general.log
+````
+### Script
+````
+CREATE USER 'owncloud_user'@'192.168.20.%' IDENTIFIED BY 'owncloud_password';
+GRANT ALL PRIVILEGES ON owncloud.* TO 'owncloud_user'@'192.168.20.%';
+FLUSH PRIVILEGES;
+````

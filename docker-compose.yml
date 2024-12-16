@@ -88,5 +88,5 @@ networks:
             config:
               - subnet: 192.168.20.0/24
 volumes:
-  web_data:  # Definimos el volumen compartido
+  web_data:  
   db_data:

@@ -26,6 +26,7 @@ En esta práctica vamos a desplegar Owncloud en una infraestructura en alta disp
 
 > [!IMPORTANT]
 > El ficher zip con todos los ficheros necesarios era de más de 25MB y no me dejaba subirlo a github.
+> https://drive.google.com/file/d/1eHZEOOfuRxTG05WOFohH7ytWfbEGJpz2/view?usp=sharing
 
 ## Docker Compose
 Para ejecutar varios contenedores en un fichero, he utilizado el docker-compose.

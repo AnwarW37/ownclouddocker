@@ -30,6 +30,7 @@ services:
     hostname: servidor_web1
     depends_on: 
       - basededatos
+      - nfsphp
     volumes:
       - web_data:/var/www/html  
 
@@ -47,6 +48,7 @@ services:
     hostname: servidor_web2
     depends_on: 
       - basededatos
+      - nfsphp
     volumes:
       - web_data:/var/www/html   
 

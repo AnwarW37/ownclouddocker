@@ -24,6 +24,9 @@ En esta práctica vamos a desplegar Owncloud en una infraestructura en alta disp
 - Capa 2: Dos contenedores con un servidor web nginx cada una y un contenedor Motor PHP-FPM.
 - Capa 3: Base de datos MariaDB.
 
+> [!IMPORTANT]
+> El ficher zip con todos los ficheros necesarios era de más de 25MB y no me dejaba subirlo a github.
+
 ## Docker Compose
 Para ejecutar varios contenedores en un fichero, he utilizado el docker-compose.
 El fichero docker-compse.yml tiene una configuración básica , en la que le indicamos el nombre de contenedor, dockerfile que van a utilizar para crear la imagen, los puertos, la red y la ip que le queremos asignar . Además , le podemos asignar la opción de que dependa de otro contenedor, como en este caso hay algunos que dependen de otros para que funcionen correctamente.

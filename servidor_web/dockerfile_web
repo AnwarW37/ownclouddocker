@@ -1,7 +1,6 @@
-# Usar la imagen base de Nginx
 FROM nginx:latest
 
-# Copiar el archivo de configuración de Nginx personalizado
+# Copiar el archivo de configuración de Nginx 
 COPY nginxweb.conf /etc/nginx/conf.d/default.conf
 
 # Exponer el puerto 80 para Nginx
@@ -10,7 +9,6 @@ EXPOSE 80
 # Iniciar Nginx y PHP-FPM
 CMD ["nginx", "-g", "daemon off;"]
 
-# Add the project
 ADD ./owncloud /var/www/html
 WORKDIR /var/www/html
 

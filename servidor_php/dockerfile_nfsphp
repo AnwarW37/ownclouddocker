@@ -1,6 +1,5 @@
 FROM debian:latest
 
-# Instalar dependencias necesarias y agregar el repositorio Sury
 RUN apt-get update && apt-get install -y \
     lsb-release \
     apt-transport-https \
@@ -10,7 +9,6 @@ RUN apt-get update && apt-get install -y \
     echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/sury.list && \
     apt-get update
 
-# Instalar PHP 7.4, sus extensiones y Nginx
 RUN apt-get install -y \
     php7.4-fpm \
     php7.4-mysql \
@@ -30,7 +28,6 @@ COPY ./www.conf /etc/php/7.4/fpm/pool.d/www.conf
 # Exponer el puerto usado por PHP-FPM
 EXPOSE 9000
 
-# Comando de inicio para PHP-FPM y Nginx
 CMD php-fpm7.4 -D && nginx -g "daemon off;"
 
 RUN chown -R www-data:www-data /var/www/html/

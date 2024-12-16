@@ -31,7 +31,7 @@ services:
     depends_on: 
       - basededatos
     volumes:
-      - web_data:/var/www/html  # Ruta donde se sirve la web en web2
+      - web_data:/var/www/html  
 
   web2:
     container_name: servidor_web2
@@ -48,7 +48,7 @@ services:
     depends_on: 
       - basededatos
     volumes:
-      - web_data:/var/www/html   # Ruta donde se sirve la web en web2
+      - web_data:/var/www/html   
 
   nfsphp:
     container_name: servidor_php
@@ -63,7 +63,7 @@ services:
     depends_on: 
       - basededatos
     volumes:
-      - web_data:/var/www/html   # Ruta donde se sirve la web en web2
+      - web_data:/var/www/html  
 
   basededatos:
     container_name: basededatos

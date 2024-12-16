@@ -1,0 +1,13 @@
+FROM mariadb
+# Configuración inicial
+ENV MYSQL_ROOT_PASSWORD=root_password
+ENV MYSQL_DATABASE=owncloud
+ENV MYSQL_USER=owncloud_user
+ENV MYSQL_PASSWORD=owncloud_password
+
+COPY ./mysqld.cnf /etc/mysql/conf.d/
+
+# Copiar script SQL para configuración adicional
+COPY script.sql /docker-entrypoint-initdb.d/
+
+EXPOSE 3306

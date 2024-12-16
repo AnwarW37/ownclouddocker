@@ -1,0 +1,32 @@
+[mysqld]
+# Configuración general
+user = mysql
+pid-file = /var/run/mysqld/mysqld.pid
+socket = /var/run/mysqld/mysqld.sock
+port = 3306
+datadir = /var/lib/mysql
+
+# Permitir conexiones desde todas las interfaces
+bind-address = 0.0.0.0
+
+# Configuración de redes
+skip-networking = 0
+
+# Optimización para desarrollo
+max_connections = 100
+connect_timeout = 10
+wait_timeout = 600
+max_allowed_packet = 16M
+
+# Opciones de logging
+log_error = /var/log/mysql/error.log
+
+# Opciones adicionales para depuración (desactivar en producción)
+general_log = 1
+general_log_file = /var/log/mysql/general.log
+
+# Características opcionales (asegúrate de instalarlas si las usas)
+# habilita el plugin X solo si es necesario
+# plugin_load_add = mysqlx
+# mysqlx_bind_address = 0.0.0.0
+# mysqlx_port = 33060

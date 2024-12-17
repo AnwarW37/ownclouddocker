@@ -16,7 +16,7 @@
    1. [Dockerfile del Contenedor MariaDB](#dockerfile-del-contenedor-mariadb)
    2. [Fichero de Configuración de MariaDB](#fichero-de-configuración-de-mariadb)
    3. [Script](#script)
-
+7. [Error](#error)
 ## Introducción
 En esta práctica vamos a desplegar Owncloud en una infraestructura en alta disponibilidad de 3 capas basada en una pila LEMP en docker.
 

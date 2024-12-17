@@ -373,3 +373,7 @@ server {
 ````
 
 ## Resultado
+Después de cambiar el fichero de configuración me dejó acceder al owncloud
+![image](https://github.com/user-attachments/assets/63d7054f-2237-43e9-82bc-52c73f9381f9)
+![image](https://github.com/user-attachments/assets/6b2b3977-80e1-47b4-8b7d-a381e47f11fc)
+

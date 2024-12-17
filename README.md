@@ -293,6 +293,7 @@ EXPOSE 3306
 ````
 
 ### Fichero de Configuración de MariaDB
+Editamos el bind-addrres para que se puedan conenctar los contenenedores de la capa2.
 ````
 [mysqld]
 user = mysql

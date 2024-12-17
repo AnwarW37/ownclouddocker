@@ -338,4 +338,4 @@ Cambio la ruta manualmente y me da el siguiente error:
 ![5](https://github.com/user-attachments/assets/b82765f0-2732-417b-9133-d225a39bdb34)
 
 
-Para comprobar si era fallo de la base de datos , he instalado mysql-client para probar si dejaba conectar y me dejaba correctamente.
+Para comprobar si era fallo de la base de datos , he instalado mysql-client para ver si dejaba conectar y me dejaba correctamente.

@@ -339,6 +339,7 @@ Cambio la ruta manualmente y me da el siguiente error:
 ![5](https://github.com/user-attachments/assets/b82765f0-2732-417b-9133-d225a39bdb34)
 
 
+## Solución
 Para comprobar si era fallo de la base de datos , he instalado mysql-client para ver si dejaba conectar y me dejaba correctamente.
 Busque los posibles fallo , que era el arhivo de configuración de los servidores web.
 Tenía que ser el siguiente:
@@ -372,8 +373,6 @@ server {
     }
 }
 ````
-
-## Solución
 Después de cambiar el fichero de configuración me dejó acceder al owncloud.
 ![image](https://github.com/user-attachments/assets/63d7054f-2237-43e9-82bc-52c73f9381f9)
 ![image](https://github.com/user-attachments/assets/6b2b3977-80e1-47b4-8b7d-a381e47f11fc)

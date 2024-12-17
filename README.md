@@ -339,3 +339,37 @@ Cambio la ruta manualmente y me da el siguiente error:
 
 
 Para comprobar si era fallo de la base de datos , he instalado mysql-client para ver si dejaba conectar y me dejaba correctamente.
+Busque los posibles fallo , que era el arhivo de configuración de los servidores web.
+Tenía que ser el siguiente:
+````
+server {
+    listen 80;
+    server_name yourdomain.com;
+
+    root /var/www/html;
+    index index.php index.html;
+
+    location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    location = /favicon.ico {
+        log_not_found off;
+        access_log off;
+    }
+
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_pass 192.168.20.13:9000;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        try_files $uri =404; # Evita bucles
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
+````
+
+## Resultado

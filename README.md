@@ -246,6 +246,7 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 ````
 ### Fichero de Configuración del Contenedor Web
+Configuramos el ngninx para que se conecte al contenedor php por el puerto 9000.
 ````
 server {
     listen 80;

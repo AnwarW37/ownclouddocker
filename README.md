@@ -322,3 +322,20 @@ CREATE USER 'owncloud_user'@'192.168.20.%' IDENTIFIED BY 'owncloud_password';
 GRANT ALL PRIVILEGES ON owncloud.* TO 'owncloud_user'@'192.168.20.%';
 FLUSH PRIVILEGES;
 ````
+## Error
+Me funciona todo , pero al intentar acceder al owncloud me pasa lo siguiente:
+
+Me deja acceder, sin problema a la página de inicio:
+![1](https://github.com/user-attachments/assets/4f780528-2470-4e0c-b466-72510f36067e)
+
+Relleno los datos, para que conecte a la base de datos:
+![3](https://github.com/user-attachments/assets/7f6a178b-3597-4945-aba7-949defd77cb6)
+
+Me da error , porque redirige a otra ruta:
+![4](https://github.com/user-attachments/assets/4d2f92ef-3588-45c1-b2aa-b72e9f71a3a9)
+
+Cambio la ruta manualmente y me da el siguiente error:
+![5](https://github.com/user-attachments/assets/b82765f0-2732-417b-9133-d225a39bdb34)
+
+
+Para comprobar si era fallo de la base de datos , he instalado mysql-client para probar si dejaba conectar y me dejaba correctamente.

@@ -315,7 +315,7 @@ general_log = 1
 general_log_file = /var/log/mysql/general.log
 ````
 ### Script
-Scrip para la creación de los usuarios para la base de datos.
+Script para la creación de los usuarios para la base de datos.
 ````
 CREATE USER 'owncloud_user'@'192.168.20.%' IDENTIFIED BY 'owncloud_password';
 GRANT ALL PRIVILEGES ON owncloud.* TO 'owncloud_user'@'192.168.20.%';
